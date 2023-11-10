@@ -99,9 +99,9 @@ struct ContentView: View {
             BillboardView(advert: advert, config: config, paywall: { Text("Paywall!") })
         }
         .task {
-            
-            if let allAds = try? await BillboardViewModel.fetchAllAds(from: config.adsJSONURL!) {
-                self.allAds = allAds
+            self.allAds = Constants.Apps.all.compactMap {
+                BillboardViewModel.prepareAd(from: $0)
+                return BillboardViewModel.generateAd(from: $0)
             }
         }
     }
