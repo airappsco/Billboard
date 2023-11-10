@@ -8,19 +8,22 @@ import SwiftUI
 import StoreKit
 
 @available(iOS 15.0, *)
-public struct BillboardView<Content:View>: View {
+public struct BillboardView: View {
     let advert : BillboardAd
     let config : BillboardConfiguration
     
-    @ViewBuilder var paywall: () -> Content
+    var paywallDidTap: () -> Void
     
     @State private var showPaywall : Bool = false
     @State private var canDismiss = false
     
-    public init(advert: BillboardAd, config: BillboardConfiguration = BillboardConfiguration(), paywall: @escaping () -> Content) {
+    public init(
+        advert: BillboardAd,
+        config: BillboardConfiguration = BillboardConfiguration(),
+        paywallDidTap: @escaping () -> Void) {
         self.advert = advert
         self.config = config
-        self.paywall = paywall
+        self.paywallDidTap = paywallDidTap
     }
     
     public var body: some View {
@@ -36,6 +39,7 @@ public struct BillboardView<Content:View>: View {
             HStack {
                 Button {
                     showPaywall.toggle()
+                    paywallDidTap()
                 } label: {
                     Text("Remove Ads")
                         .font(.system(.footnote, design: .rounded))
@@ -66,7 +70,6 @@ public struct BillboardView<Content:View>: View {
             .tint(advert.tint)
             .padding()
         }
-        .sheet(isPresented: $showPaywall) { paywall() }
         .onAppear(perform: displayOverlay)
         .onDisappear(perform: dismissOverlay)
         .onChange(of: showPaywall) { newValue in
