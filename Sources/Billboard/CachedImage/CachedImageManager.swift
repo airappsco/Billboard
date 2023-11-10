@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(iOS 15.0, *)
 final class CachedImageManager: ObservableObject {
     
     @Published private(set) var currentState: CurrentState?
@@ -35,6 +36,7 @@ final class CachedImageManager: ObservableObject {
     }
 }
 
+@available(iOS 15.0, *)
 extension CachedImageManager {
     enum CurrentState {
         case loading
@@ -43,6 +45,7 @@ extension CachedImageManager {
     }
 }
 
+@available(iOS 15.0, *)
 extension CachedImageManager.CurrentState: Equatable {
     static func == (lhs: CachedImageManager.CurrentState,
                     rhs: CachedImageManager.CurrentState) -> Bool {

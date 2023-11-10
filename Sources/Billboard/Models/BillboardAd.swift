@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-
+@available(iOS 15.0, *)
 public struct BillboardAd : Codable, Identifiable, Equatable {
     
     public static func == (lhs: BillboardAd, rhs: BillboardAd) -> Bool {

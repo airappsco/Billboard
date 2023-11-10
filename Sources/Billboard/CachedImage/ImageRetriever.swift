@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(iOS 15.0, *)
 struct ImageRetriver {
     
     func fetch(_ imgUrl: String) async throws -> Data {
@@ -19,6 +20,7 @@ struct ImageRetriver {
     }
 }
 
+@available(iOS 15.0, *)
 private extension ImageRetriver {
     enum RetriverError: Error {
         case invalidUrl

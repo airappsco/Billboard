@@ -7,6 +7,7 @@
 import SwiftUI
 import StoreKit
 
+@available(iOS 15.0, *)
 public struct BillboardView<Content:View>: View {
     let advert : BillboardAd
     let config : BillboardConfiguration

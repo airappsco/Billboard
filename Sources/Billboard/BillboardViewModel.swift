@@ -8,6 +8,7 @@
 import Foundation
 import OSLog
 
+@available(iOS 15.0, *)
 public final class BillboardViewModel : ObservableObject {
     
     let configuration: BillboardConfiguration

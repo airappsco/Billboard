@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct CachedImage<Content: View>: View {
     
     @StateObject private var manager = CachedImageManager()
@@ -55,12 +56,14 @@ struct CachedImage<Content: View>: View {
     }
 }
 
+@available(iOS 15.0, *)
 struct CachedImage_Previews: PreviewProvider {
     static var previews: some View {
         CachedImage(url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/600px-RedDot_Burger.jpg") { _ in EmptyView() }
     }
 }
 
+@available(iOS 15.0, *)
 extension CachedImage {
     enum CachedImageError: Error {
         case invalidData

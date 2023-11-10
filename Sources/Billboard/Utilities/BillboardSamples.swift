@@ -8,6 +8,7 @@
 import Foundation
 
 
+@available(iOS 15.0, *)
 public struct BillboardSamples {
     
     static let sampleDefaultAd : BillboardAd = BillboardAd(appStoreID: "1596487035",

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct BillboardCountdownView : View {
     
     let advert : BillboardAd
@@ -73,7 +74,7 @@ struct BillboardCountdownView : View {
     }
 }
 
-
+@available(iOS 15.0, *)
 struct BillboardCountdownView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {

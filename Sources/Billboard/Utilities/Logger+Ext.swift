@@ -7,6 +7,7 @@
 
 import OSLog
 
+@available(iOS 15.0, *)
 extension Logger {
     /// Using your bundle identifier is a great way to ensure a unique identifier.
     private static var subsystem = Bundle.main.bundleIdentifier!

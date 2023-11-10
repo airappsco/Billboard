@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct FullScreenAdView : View {
     let advert : BillboardAd
     
@@ -51,6 +52,7 @@ struct FullScreenAdView : View {
     }
 }
 
+@available(iOS 15.0, *)
 struct FullScreenAdView_Previews: PreviewProvider {
     static var previews: some View {
         FullScreenAdView(advert: BillboardSamples.sampleFullScreenAd)

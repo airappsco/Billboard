@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct BillboardDismissButton : View {
     @Environment(\.dismiss) var dismiss
     

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 extension Font {
     public static func compatibleSystem(_ style: TextStyle, design: Design?, weight: Weight?) -> Font {
         if #available(iOS 16.0, *) {

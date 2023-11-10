@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct DefaultAdView : View {
     let advert : BillboardAd
     
@@ -75,6 +76,7 @@ struct DefaultAdView : View {
     
 }
 
+@available(iOS 15.0, *)
 struct DefaultAdView_Previews: PreviewProvider {
     static var previews: some View {
         DefaultAdView(advert: BillboardSamples.sampleDefaultAd)

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct BillboardImageView : View {
     let advert : BillboardAd
     
@@ -48,6 +49,7 @@ struct BillboardImageView : View {
     }
 }
 
+@available(iOS 15.0, *)
 struct BillboardImageView_Previews: PreviewProvider {
     static var previews: some View {
         BillboardImageView(advert: BillboardSamples.sampleFullScreenAd)

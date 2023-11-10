@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 extension View {
     public func showBillboard<V: View>(when condition: Binding<Bool>,
                                            configuration: BillboardConfiguration = BillboardConfiguration(),
@@ -15,6 +16,7 @@ extension View {
     }
 }
 
+@available(iOS 15.0, *)
 public struct AdvertisementModifier<V: View>: ViewModifier {
     
     let showAd : Binding<Bool>

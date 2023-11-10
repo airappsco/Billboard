@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 public struct BillboardBannerView : View {
     @Environment(\.accessibilityReduceMotion) private var reducedMotion
     @Environment(\.openURL) private var openURL
@@ -134,7 +135,7 @@ public struct BillboardBannerView : View {
     }
 }
 
-
+@available(iOS 15.0, *)
 struct BillboardBannerView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
