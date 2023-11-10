@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @available(iOS 15.0, *)
-public struct BillboardAd : Codable, Identifiable, Equatable {
+public struct BillboardAd: Identifiable, Equatable {
     
     public static func == (lhs: BillboardAd, rhs: BillboardAd) -> Bool {
         lhs.id == rhs.id
@@ -30,6 +30,9 @@ public struct BillboardAd : Codable, Identifiable, Equatable {
     
     /// Description that's displayed on the Ad (Recommended to be no more than 140 characters)
     public let description : String
+    
+    /// Title that's displayed on show paywall button
+    public let paywallButtonTitle: String
     
     /// URL of image that's used in the Ad
     public let media : URL
@@ -54,6 +57,12 @@ public struct BillboardAd : Codable, Identifiable, Equatable {
     
     /// Allows blurred background when the main image is a PNG
     public let transparent : Bool
+    
+    /// The duration of the advertisement
+    public let advertDuration: TimeInterval
+    
+    /// Enable or disable haptics
+    public let allowHaptics: Bool
     
     public var background : Color {
         return Color(hex: self.backgroundColor)
@@ -100,4 +109,58 @@ public struct AppIconResponse : Codable {
 public struct AppIconResult : Codable {
     let artworkUrl100: String
 
+}
+
+@available(iOS 15.0, *)
+extension BillboardAd: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case appStoreID
+        case name
+        case title
+        case description
+        case paywallButtonTitle
+        case media
+        case backgroundColor
+        case textColor
+        case tintColor
+        case fullScreen
+        case transparent
+        case advertDuration
+        case allowHaptics
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        appStoreID = try container.decode(String.self, forKey: .appStoreID)
+        name = try container.decode(String.self, forKey: .name)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decode(String.self, forKey: .description)
+        paywallButtonTitle = try container.decodeIfPresent(String.self, forKey: .paywallButtonTitle) ?? "Remove Ads"
+        media = try container.decode(URL.self, forKey: .media)
+        backgroundColor = try container.decode(String.self, forKey: .backgroundColor)
+        textColor = try container.decode(String.self, forKey: .textColor)
+        tintColor = try container.decode(String.self, forKey: .tintColor)
+        fullscreen = try container.decodeIfPresent(Bool.self, forKey: .fullScreen) ?? false
+        transparent = try container.decode(Bool.self, forKey: .transparent)
+        advertDuration = try container.decodeIfPresent(TimeInterval.self, forKey: .advertDuration) ?? 5
+        allowHaptics = try container.decodeIfPresent(Bool.self, forKey: .allowHaptics) ?? false
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(appStoreID, forKey: .appStoreID)
+        try container.encode(name, forKey: .name)
+        try container.encode(title, forKey: .title)
+        try container.encode(description, forKey: .description)
+        try container.encode(paywallButtonTitle, forKey: .paywallButtonTitle)
+        try container.encode(media, forKey: .media)
+        try container.encode(backgroundColor, forKey: .backgroundColor)
+        try container.encode(textColor, forKey: .textColor)
+        try container.encode(tintColor, forKey: .tintColor)
+        try container.encode(fullscreen, forKey: .fullScreen)
+        try container.encode(transparent, forKey: .transparent)
+        try container.encode(advertDuration, forKey: .advertDuration)
+        try container.encode(allowHaptics, forKey: .allowHaptics)
+    }
 }

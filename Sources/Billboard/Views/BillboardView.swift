@@ -10,7 +10,6 @@ import StoreKit
 @available(iOS 15.0, *)
 public struct BillboardView: View {
     let advert : BillboardAd
-    let config : BillboardConfiguration
     
     var paywallDidTap: () -> Void
     
@@ -19,10 +18,8 @@ public struct BillboardView: View {
     
     public init(
         advert: BillboardAd,
-        config: BillboardConfiguration = BillboardConfiguration(),
         paywallDidTap: @escaping () -> Void) {
         self.advert = advert
-        self.config = config
         self.paywallDidTap = paywallDidTap
     }
     
@@ -41,7 +38,7 @@ public struct BillboardView: View {
                     showPaywall.toggle()
                     paywallDidTap()
                 } label: {
-                    Text("Remove Ads")
+                    Text(advert.paywallButtonTitle)
                         .font(.system(.footnote, design: .rounded))
                         .bold()
                 }
@@ -55,14 +52,14 @@ public struct BillboardView: View {
                     BillboardDismissButton()
                         .onAppear {
                             #if os(iOS)
-                            if config.allowHaptics {
+                            if advert.allowHaptics {
                                 haptics(.light)
                             }
                             #endif
                         }
                 } else {
                     BillboardCountdownView(advert:advert,
-                                           totalDuration: config.duration,
+                                           totalDuration: advert.advertDuration,
                                            canDismiss: $canDismiss)
                 }
             }
@@ -107,7 +104,7 @@ public struct BillboardView: View {
         storeOverlay.present(in: scene)
         
         #if os(iOS)
-        if config.allowHaptics {
+        if advert.allowHaptics {
             haptics(.heavy)
         }
         #endif

@@ -12,7 +12,6 @@ public struct BillboardBannerView : View {
     @Environment(\.openURL) private var openURL
     
     let advert : BillboardAd
-    let config : BillboardConfiguration
     let includeShadow : Bool
     let hideDismissButtonAndTimer : Bool
     
@@ -20,9 +19,8 @@ public struct BillboardBannerView : View {
     @State private var appIcon : UIImage? = nil
     @State private var showAdvertisement = true
     
-    public init(advert: BillboardAd, config: BillboardConfiguration = BillboardConfiguration(), includeShadow: Bool = true, hideDismissButtonAndTimer: Bool = false) {
+    public init(advert: BillboardAd, includeShadow: Bool = true, hideDismissButtonAndTimer: Bool = false) {
         self.advert = advert
-        self.config = config
         self.includeShadow = includeShadow
         self.hideDismissButtonAndTimer = hideDismissButtonAndTimer
     }
@@ -67,7 +65,7 @@ public struct BillboardBannerView : View {
             if !hideDismissButtonAndTimer {
                 if canDismiss {
                     Button {
-                        if config.allowHaptics {
+                        if advert.allowHaptics {
                             haptics(.light)
                         }
                         
@@ -86,7 +84,7 @@ public struct BillboardBannerView : View {
                     .tint(advert.tint)
                 } else {
                     BillboardCountdownView(advert:advert,
-                                           totalDuration: config.duration,
+                                           totalDuration: advert.advertDuration,
                                            canDismiss: $canDismiss)
                     .padding(.trailing, 2)
                 }

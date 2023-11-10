@@ -15,9 +15,7 @@ struct ContentView: View {
     @State private var showRandomAdvert = false
     @State private var adtoshow :BillboardAd? = nil
     @State private var allAds : [BillboardAd] = []
-    
-    let config = BillboardConfiguration(advertDuration: 5)
-    
+        
     var body: some View {
         NavigationStack {
             List {
@@ -29,27 +27,6 @@ struct ContentView: View {
                     }
                 }
                 
-                Section(content: {
-                    Text("This example shows some different ways of presenting an ad but also lets you explore all Ads that are available right now!")
-                    Button {
-                        if !premium.didBuyPremium {
-                            showRandomAdvert = true
-                        }
-                        
-                        
-                    } label: {
-                        HStack {
-                            Image(systemName: "eyes")
-                                .imageScale(.large)
-                                .foregroundColor(.accentColor)
-                                .padding(2)
-                            Text("Show me a random ad!")
-                        }
-                        .padding(6)
-                    }
-                    
-                }, footer: { Text("Total Ads: \(allAds.count)") })
-                
                 Section {
                     ForEach(allAds) { ad in
                         Button {
@@ -60,6 +37,8 @@ struct ContentView: View {
                         }
                         
                     }
+                } header: {
+                    Text("Total Ads: \(allAds.count)")
                 }
             }
             .font(.compatibleSystem(.body, design: .rounded, weight: .medium))
@@ -71,22 +50,9 @@ struct ContentView: View {
                 
             }
         })
-        .refreshable {
-            Task {
-                if let allAds = try? await BillboardViewModel.fetchAllAds(from: config.adsJSONURL!) {
-                    self.allAds = allAds
-                }
-            }
-        }
-        .onChange(of: premium.didBuyPremium) { newValue in
-            if newValue {
-                showRandomAdvert = !newValue
-            }
-        }
         .fullScreenCover(item: $adtoshow) { advert in
             BillboardView(
-                advert: advert,
-                config: config) {
+                advert: advert) {
                     print("Show Paywall Did Tap!")
                 }
         }
