@@ -2,7 +2,8 @@
 //  Constants.swift
 //  BillboardExample
 //
-//  Created by Ufuk on 10/11/2023.
+//  Created by Ufuk Benlice on 10/11/2023.
+//  Copyright © 2023 Air Apps. All rights reserved.
 //
 
 import Foundation
