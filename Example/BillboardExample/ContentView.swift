@@ -52,9 +52,13 @@ struct ContentView: View {
         })
         .fullScreenCover(item: $adtoshow) { advert in
             BillboardView(
-                advert: advert) {
-                    print("Show Paywall Did Tap!")
-                }
+                advert: advert,
+                paywallDidTap: {
+                    print("Paywall Did Tap!")
+                },
+                dismissDidTap: {
+                    self.adtoshow = nil
+                })
         }
         .task {
             self.allAds = Constants.Apps.all.compactMap {

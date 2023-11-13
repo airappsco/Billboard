@@ -14,15 +14,21 @@ public struct BillboardBannerView : View {
     let advert : BillboardAd
     let includeShadow : Bool
     let hideDismissButtonAndTimer : Bool
+    var dismissDidTap: (() -> Void)?
     
     @State private var canDismiss = false
     @State private var appIcon : UIImage? = nil
     @State private var showAdvertisement = true
     
-    public init(advert: BillboardAd, includeShadow: Bool = true, hideDismissButtonAndTimer: Bool = false) {
-        self.advert = advert
-        self.includeShadow = includeShadow
-        self.hideDismissButtonAndTimer = hideDismissButtonAndTimer
+    public init(
+        advert: BillboardAd,
+        includeShadow: Bool = true,
+        hideDismissButtonAndTimer: Bool = false,
+        dismissDidTap: (() -> Void)? = nil) {
+            self.advert = advert
+            self.includeShadow = includeShadow
+            self.hideDismissButtonAndTimer = hideDismissButtonAndTimer
+            self.dismissDidTap = dismissDidTap
     }
     
     public var body: some View {
@@ -69,9 +75,11 @@ public struct BillboardBannerView : View {
                             haptics(.light)
                         }
                         
-                        withAnimation(.spring()) {
+                        withAnimation(.default) {
                             showAdvertisement = false
                         }
+                        
+                        dismissDidTap?()
                         
                     } label: {
                         Label("Dismiss advertisement", systemImage: "xmark.circle.fill")
@@ -97,8 +105,6 @@ public struct BillboardBannerView : View {
             await fetchAppIcon()
         }
         .opacity(showAdvertisement ? 1 : 0)
-        .scaleEffect(showAdvertisement ? 1 : 0)
-        .frame(height: showAdvertisement ? nil : 0)
         .transaction {
             if reducedMotion { $0.animation = nil }
         }
