@@ -62,5 +62,9 @@ extension BillboardViewModel {
             let mediaUrl = advert.media.absoluteString
             await CachedImageManager().load(mediaUrl, cache: .shared)
         }
+        
+        Task {
+            try? await advert.getAppIcon()
+        }
     }
 }

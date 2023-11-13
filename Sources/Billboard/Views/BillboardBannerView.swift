@@ -46,6 +46,11 @@ public struct BillboardBannerView : View {
                             .resizable()
                             .frame(width: 60, height: 60)
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    } else {
+                        Rectangle()
+                            .frame(width: 60, height: 60)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .opacity(0)
                     }
                     VStack(alignment: .leading, spacing: 4) {
                         
