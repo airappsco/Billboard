@@ -9,11 +9,11 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct BillboardDismissButton : View {
-    @Environment(\.dismiss) var dismiss
+    var dismissDidTap: () -> Void
     
     var body: some View {
         Button {
-            dismiss()
+            dismissDidTap()
         } label: {
             Label("Dismiss advertisement", systemImage: "xmark.circle.fill")
                 .labelStyle(.iconOnly)

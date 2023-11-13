@@ -9,18 +9,22 @@ import StoreKit
 
 @available(iOS 15.0, *)
 public struct BillboardView: View {
-    let advert : BillboardAd
     
+    let advert : BillboardAd
+
     var paywallDidTap: () -> Void
+    var dismissDidTap: () -> Void
     
     @State private var showPaywall : Bool = false
     @State private var canDismiss = false
     
     public init(
         advert: BillboardAd,
-        paywallDidTap: @escaping () -> Void) {
-        self.advert = advert
-        self.paywallDidTap = paywallDidTap
+        paywallDidTap: @escaping () -> Void,
+        dismissDidTap: @escaping () -> Void) {
+            self.advert = advert
+            self.paywallDidTap = paywallDidTap
+            self.dismissDidTap = dismissDidTap
     }
     
     public var body: some View {
@@ -49,7 +53,7 @@ public struct BillboardView: View {
                 
                 // TimerView
                 if canDismiss {
-                    BillboardDismissButton()
+                    BillboardDismissButton(dismissDidTap: dismissDidTap)
                         .onAppear {
                             #if os(iOS)
                             if advert.allowHaptics {
