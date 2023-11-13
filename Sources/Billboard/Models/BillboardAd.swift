@@ -82,22 +82,26 @@ public struct BillboardAd: Identifiable, Equatable {
     }
     
     public func getAppIcon() async throws -> Data? {
-        guard let appIconURL else { return nil }
-        let session = URLSession(configuration: BillboardViewModel.networkConfiguration)
-        session.sessionDescription = "Fetching App Icon"
-        
-        do {
-            let (data, _) = try await session.data(from: appIconURL)
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(AppIconResponse.self, from: data)
-            guard let artworkUrlStr = response.results.first?.artworkUrl100, let artworkURL = URL(string: artworkUrlStr) else { return nil }
+        if let appIcon = BillboardViewModel.appIcons[appStoreID] {
+            return appIcon
+        } else {
+            guard let appIconURL else { return nil }
+            let session = URLSession(configuration: BillboardViewModel.networkConfiguration)
+            session.sessionDescription = "Fetching App Icon"
             
-            return try? Data(contentsOf: artworkURL)
-            
-        } catch {
-            return nil
+            do {
+                let (data, _) = try await session.data(from: appIconURL)
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(AppIconResponse.self, from: data)
+                guard let artworkUrlStr = response.results.first?.artworkUrl100, let artworkURL = URL(string: artworkUrlStr) else { return nil }
+                
+                let appIcon = try? Data(contentsOf: artworkURL)
+                BillboardViewModel.appIcons[appStoreID] = appIcon
+                return appIcon
+            } catch {
+                return nil
+            }
         }
-
     }
 }
 

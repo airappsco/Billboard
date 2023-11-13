@@ -47,9 +47,9 @@ public struct BillboardBannerView : View {
                             .frame(width: 60, height: 60)
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     } else {
-                        Rectangle()
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(advert.background)
                             .frame(width: 60, height: 60)
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .opacity(0)
                     }
                     VStack(alignment: .leading, spacing: 4) {

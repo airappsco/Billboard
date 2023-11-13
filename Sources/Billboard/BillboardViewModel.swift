@@ -18,6 +18,9 @@ public final class BillboardViewModel : ObservableObject {
         config.timeoutIntervalForRequest = 30
         return config
     }
+    
+    /// Cached App Icons for reuse
+    static var appIcons = [String: Data]()
 }
 
 //MARK: - Air Apps Additions
