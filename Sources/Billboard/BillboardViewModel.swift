@@ -56,9 +56,10 @@ extension BillboardViewModel {
     
     /// Downloads and caches downloadable content of Ad
     /// - Parameter data: Represents BillboardAd JSON as Data type
-    public static func prepareAd(from data: Data) {
+    /// - Returns: Boolean value that refers operation is success or not
+    public static func prepareAd(from data: Data) -> Bool {
         guard let advert = BillboardViewModel.generateAd(from: data) else {
-            return
+            return false
         }
         
         Task {
@@ -69,5 +70,7 @@ extension BillboardViewModel {
         Task {
             try? await advert.getAppIcon()
         }
+        
+        return true
     }
 }
