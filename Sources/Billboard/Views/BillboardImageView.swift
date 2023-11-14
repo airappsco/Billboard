@@ -45,7 +45,7 @@ struct BillboardImageView : View {
         Rectangle()
             .fill(advert.background)
             .aspectRatio(1.0, contentMode: .fill)
-            .frame(maxWidth: 640)
+            .frame(maxWidth: UIScreen.main.bounds.width)
     }
 }
 
