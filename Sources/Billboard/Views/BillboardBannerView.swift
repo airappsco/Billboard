@@ -5,11 +5,11 @@
 //
 
 import SwiftUI
+import StoreKit
 
 @available(iOS 15.0, *)
 public struct BillboardBannerView : View {
     @Environment(\.accessibilityReduceMotion) private var reducedMotion
-    @Environment(\.openURL) private var openURL
     
     let advert : BillboardAd
     let includeShadow : Bool
@@ -36,7 +36,9 @@ public struct BillboardBannerView : View {
         HStack(spacing: 10) {
             Button {
                 if let url = advert.appStoreLink {
-                    openURL(url)
+                    let storeViewController = SKStoreProductViewController()
+                    storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier : advert.appStoreID])
+                    UIViewController.topMostViewController?.present(storeViewController, animated: true)
                     canDismiss = true
                 }
             } label: {
@@ -153,5 +155,19 @@ struct BillboardBannerView_Previews: PreviewProvider {
         }
         .padding()
         
+    }
+}
+
+private extension UIViewController {
+    
+    static var topMostViewController: UIViewController? {
+        var topViewController: UIViewController?
+        if var controller = UIApplication.shared.windows.first?.rootViewController {
+            while let presentedViewController = controller.presentedViewController {
+                controller = presentedViewController
+            }
+            topViewController = controller
+        }
+        return topViewController
     }
 }
