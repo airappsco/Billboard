@@ -38,8 +38,13 @@ public struct BillboardBannerView : View {
                 if let url = advert.appStoreLink {
                     let storeViewController = SKStoreProductViewController()
                     storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier : advert.appStoreID])
-                    UIViewController.topMostViewController?.present(storeViewController, animated: true)
-                    canDismiss = true
+                    UIViewController.topMostViewController?.present(
+                        storeViewController,
+                        animated: true,
+                        completion: {
+                            self.canDismiss = true
+                        }
+                    )
                 }
             } label: {
                 HStack(spacing: 10) {
